@@ -20,7 +20,9 @@ if (cluster.isPrimary) {
     app.use(express.json())
     app.use(cors())
 
-
+    app.get("/", (req,res)=>{
+        res.send("user connected");
+    })
     app.get("/home", HomeRouter)
     app.get("/about", AboutRouter)
     app.get("/project", ProjectRouter)
