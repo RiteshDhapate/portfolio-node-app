@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 main().then(() => console.log("db connected")).catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect(process.env.DBURL);
+  await mongoose.connect("mongodb+srv://rieshdhapatepatil:DHAPATEPATIL817717@cluster0.g3ppn4h.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp");
 }
 
 

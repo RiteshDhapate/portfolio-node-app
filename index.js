@@ -28,7 +28,7 @@ if (cluster.isPrimary) {
     app.get("/project", ProjectRouter)
 
     
-    app.listen(process.env.PORT, () => {
-        console.log("server listen on :", process.env.PORT);
+    app.listen(process.env.PORT | 6666, () => {
+        console.log("server listening");
     })
 }  
