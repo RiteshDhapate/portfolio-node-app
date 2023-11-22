@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-
-main().then(() => console.log("db connected")).catch(err => console.log(err));
-
+const DB_URL= process.env.DB_CONNECT_URL;
 async function main() {
-  await mongoose.connect("mongodb+srv://rieshdhapatepatil:DHAPATEPATIL817717@cluster0.g3ppn4h.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp");
+  await mongoose.connect(DB_URL);
 }
+main()
+.then(() => console.log("db connected"))
+.catch(err => console.log("connection error :",err));
+
 
 
 const HomeSchema = new Schema({
@@ -22,6 +24,14 @@ const ProjectSchema = new Schema({
   project:Object
 });
 
+const ProjectDetailsSchema = new Schema({
+ projectTitle:String,
+massage:String,
+img:Array,
+TechnologyTitle:String,
+Technology:Array
+});
+
 const AboutSchema = new Schema({
   title: String,
   mainMassage: String,
@@ -31,7 +41,17 @@ const AboutSchema = new Schema({
   f: Object
 });
 
+
+const ResumeSchema= new Schema({
+  img:String,
+  btnText:String,
+  resumeLink:String
+});
+
+
 const Home = new mongoose.model('homes', HomeSchema);
 const About = new mongoose.model('abouts', AboutSchema);
 const Project = new mongoose.model('projects', ProjectSchema);
-module.exports = { Home, About,Project };
+const Resume = new mongoose.model('resumes', ResumeSchema);
+const ProjectDetails = new mongoose.model('pdetails', ProjectDetailsSchema);
+module.exports = { Home, About,Project,Resume,ProjectDetails};

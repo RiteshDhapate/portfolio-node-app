@@ -1,10 +1,10 @@
-const {Home,About,Project} = require("../model/monodbConnection")
-
+const {Home,About,Project,Resume,ProjectDetails} = require("../model/monodbConnection")
+const mongoose =require("mongoose")
 const ProjectRouter = async(req,res)=>{
     try {
        const ProjectData= await Project.find()
-       console.log(ProjectData);
        res.json(ProjectData)
+       console.log("project data sent");
     } catch (error) {
         console.log("project :",error);
     }
@@ -13,8 +13,8 @@ const ProjectRouter = async(req,res)=>{
 const HomeRouter=async(req,res)=>{
     try {
        const HomeData= await Home.find()
-       console.log(HomeData);
        res.json(HomeData)
+       console.log("home data sent");
     } catch (error) {
         console.log("home :",error);
     }
@@ -24,11 +24,32 @@ const HomeRouter=async(req,res)=>{
 const AboutRouter=async(req,res)=>{
     try {
        const AboutData= await About.find()
-       console.log(AboutData);
        res.json(AboutData)
+       console.log("about data sent");
     } catch (error) {
         console.log("about :",error);
     }
 }
 
-module.exports={HomeRouter,AboutRouter,ProjectRouter}
+const ResumeRouter=async(req,res)=>{
+    try {
+       const ResumeData= await Resume.find();
+       res.json(ResumeData)
+       console.log("resume dada sent");
+    } catch (error) {
+        console.log("resume :",error);
+    }
+}
+
+const ProjectDetailsRouter =async(req,res)=>{
+    try {
+       const id = req.params.id;
+       console.log(id);
+       const ProjectAllDetails= await ProjectDetails.find({_id:id});
+       console.log("project all data sent");
+       res.send(ProjectAllDetails);
+    } catch (error) {
+        console.log("ProjectDetailsRouter :",error);
+    }
+}
+module.exports={HomeRouter,AboutRouter,ProjectRouter,ResumeRouter,ProjectDetailsRouter}

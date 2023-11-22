@@ -2,6 +2,7 @@ require('dotenv').config()
 const cluster = require('node:cluster');
 const os = require("node:os");
 const numCPUs = os.cpus().length;
+const compression = require('compression')
 const process = require('node:process');
 
 if (cluster.isPrimary) {
@@ -15,20 +16,33 @@ if (cluster.isPrimary) {
     const express = require('express');
     const app = express();
     const cors = require("cors")
-    const port = 8080;
-    const { HomeRouter, AboutRouter, ProjectRouter } = require("./controller/routeController");
+    const { HomeRouter, AboutRouter, ProjectRouter,ResumeRouter,ProjectDetailsRouter } = require("./controller/routeController");
     app.use(express.json())
     app.use(cors())
+    app.use(compression({ filter: shouldCompress }))
+ 
+    function shouldCompress (req, res) {
+      if (req.headers['x-no-compression']) {
+        // don't compress responses with this request header
+        return false
+      }
+     
+      // fallback to standard filter function
+      return compression.filter(req, res)
+    }
 
     app.get("/", (req,res)=>{
         res.send("user connected");
     })
-    app.get("/home", HomeRouter)
-    app.get("/about", AboutRouter)
-    app.get("/project", ProjectRouter)
-
+    app.get("/home", HomeRouter);
+    app.get("/about", AboutRouter);
+    app.get("/resume", ResumeRouter);
+    app.get("/project", ProjectRouter);
+    app.get("/project/:id", ProjectDetailsRouter);
     
-    app.listen(process.env.PORT | 6666, () => {
-        console.log("server listening");
+    
+    const port = process.env.PORT || 3001; 
+    app.listen(port, () => {
+        console.log("server listening ",port);
     })
 }  
