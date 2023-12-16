@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const DB_URL= process.env.DB_CONNECT_URL;
+const DB_URL= "mongodb+srv://rieshdhapatepatil:DHAPATEPATIL817717@cluster0.g3ppn4h.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp";
 async function main() {
   await mongoose.connect(DB_URL);
 }
